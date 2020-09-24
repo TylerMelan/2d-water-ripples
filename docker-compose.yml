@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./api
+    volumes:
+      - ./api:/api
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+  client:
+    build:
+      context: ./client
+    volumes:
+      - ./client:/client
+      - ./client/node_modules:/client/node_modules
+    ports:
+      - "3000:3000"
+    command: yarn --cwd ./client start
+    tty: true
+  web:
+    build:
+      context: ./web
+    ports:
+      - 80:80
+    depends_on:
+      - api
+      - client
