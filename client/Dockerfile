@@ -1,8 +1,8 @@
-FROM node:12.18.4
+FROM node:14-alpine
 
 WORKDIR /client
 
-# COPY ./client/package.json ./client/yarn.lock /client/
-# RUN yarn install
+COPY package.json yarn.lock /client/
+RUN yarn install
 
-COPY . ./
+COPY . /client
